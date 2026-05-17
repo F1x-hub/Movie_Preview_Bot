@@ -30,16 +30,19 @@ module.exports = async (req, res) => {
         }
 
         try {
-            const { movie, scheduledAt } = req.body;
+            const { movie, scheduledAt, rawDateStr } = req.body;
             if (!movie || !scheduledAt) {
                 return res.status(400).json({ error: 'Missing movie or scheduledAt' });
             }
 
-            const dateObj = new Date(scheduledAt);
-            const dateStr = dateObj.toLocaleString('ru-RU', {
-                day: '2-digit', month: '2-digit', year: 'numeric',
-                hour: '2-digit', minute: '2-digit'
-            });
+            let dateStr = rawDateStr;
+            if (!dateStr) {
+                const dateObj = new Date(scheduledAt);
+                dateStr = dateObj.toLocaleString('ru-RU', {
+                    day: '2-digit', month: '2-digit', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+            }
 
             const caption = `🎬 *${movie.name}* ${movie.year ? `(${movie.year})` : ''}\n\n🗓 *Запланировано на:* ${dateStr}\n\n${movie.description || ''}`;
             const CHAT_ID = process.env.CHAT_ID;
