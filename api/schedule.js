@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
                 });
             }
 
-            const caption = `🎬 *${movie.name}* ${movie.year ? `(${movie.year})` : ''}\n\n🗓 *Запланировано на:* ${dateStr}\n\n${movie.description || ''}`;
+            const caption = `🎬 *${movie.name}* ${movie.year ? `(${movie.year})` : ''}\n\n🗓 *Запланировано на:* ${dateStr} по МСК\n\n${movie.description || ''}`;
             const CHAT_ID = process.env.CHAT_ID;
 
             // Отправляем сообщение в Телеграм
